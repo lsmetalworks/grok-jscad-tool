@@ -25,13 +25,20 @@ document.getElementById('dxfInput').addEventListener('change', (event) => {
   }
 });
 
-// Load sample DXF
+// Load sample DXF with error handling
 window.loadSampleDXF = function () {
   fetch('./dxfs/sample.dxf')
-    .then(response => response.text())
+    .then(response => {
+      if (!response.ok) throw new Error('Sample DXF not found');
+      return response.text();
+    })
     .then(dxfData => {
       dxfGeometry = deserialize({ output: 'geometry' }, dxfData);
       updateDesign();
+    })
+    .catch(error => {
+      alert('Failed to load sample DXF. Please check the file or upload your own.');
+      console.error(error);
     });
 };
 
