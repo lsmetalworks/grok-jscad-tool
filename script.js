@@ -17,19 +17,32 @@ let currentDXFData = null;
 
 // Function to fetch and load DXF file
 async function loadDXFFile(filename) {
-    const response = await fetch(`dxf/${filename}`);
-    const dxfText = await response.text();
-    currentDXFData = dxfText;
-    renderDXF(dxfText);
+    try {
+        const response = await fetch(`dxf/${filename}`);
+        if (!response.ok) {
+            throw new Error(`Error loading DXF file: ${response.status}`);
+        }
+        const dxfText = await response.text();
+        currentDXFData = dxfText;
+        renderDXF(dxfText);
+    } catch (error) {
+        console.error("Failed to load DXF:", error);
+    }
 }
 
 // Function to render DXF using OpenJSCAD
 function renderDXF(dxfData) {
-    OpenJsCad.runJscadScript("viewer", `
-        function main() {
-            return '${dxfData}';
-        }
-    `);
+    try {
+        const parsedDXF = OpenJsCad.deserializers.dxf.deserialize({ input: dxfData });
+
+        OpenJsCad.runJscadScript("viewer", `
+            function main() {
+                return ${JSON.stringify(parsedDXF)};
+            }
+        `);
+    } catch (error) {
+        console.error("Error rendering DXF:", error);
+    }
 }
 
 // Load DXF from selection
