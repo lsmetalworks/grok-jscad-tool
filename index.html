@@ -1,1 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parametric DXF Editor</title>
+    <script src="https://unpkg.com/@jscad/openjscad@1.9.0/dist/openjscad.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>DXF Parametric Editor</h1>
+
+    <!-- File Selection -->
+    <label for="fileSelect">Choose a DXF File:</label>
+    <select id="fileSelect">
+        <option value="bracket.dxf">Bracket</option>
+        <option value="gusset.dxf">Gusset</option>
+        <option value="plate.dxf">Mounting Plate</option>
+    </select>
+    <button id="loadDXF">Load DXF</button>
+
+    <!-- Upload DXF -->
+    <input type="file" id="uploadDXF" accept=".dxf">
+
+    <!-- Parametric Controls -->
+    <h3>Adjust Parameters:</h3>
+    <label for="scaleFactor">Scale Factor:</label>
+    <input type="number" id="scaleFactor" step="0.1" value="1.0">
+
+    <label for="offsetX">Offset X (mm):</label>
+    <input type="number" id="offsetX" value="0">
+
+    <label for="offsetY">Offset Y (mm):</label>
+    <input type="number" id="offsetY" value="0">
+
+    <button id="applyChanges">Apply Changes</button>
+
+    <!-- Hole Adjustments -->
+    <h3>Hole Adjustments:</h3>
+    <label for="holeSize">Hole Diameter (mm):</label>
+    <input type="number" id="holeSize" value="10">
+
+    <label for="holeX">Hole X Position (mm):</label>
+    <input type="number" id="holeX" value="50">
+
+    <label for="holeY">Hole Y Position (mm):</label>
+    <input type="number" id="holeY" value="25">
+
+    <button id="applyHoleChanges">Apply Hole Changes</button>
+    <button id="downloadDXF">Download DXF</button>
+
+    <!-- Viewer -->
+    <div id="viewer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
 
